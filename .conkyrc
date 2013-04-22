@@ -1,0 +1,144 @@
+use_xft yes
+maximum_width 300
+xftfont Terminus:size=8.5
+xftalpha 0.75
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_colour white
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_type normal
+own_window_class Conky
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+background no
+double_buffer yes
+minimum_size 300 1200
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_shade_color 000000
+default_outline_color 000000
+default_bar_size 150 5
+default_gauge_size 20 20
+imlib_cache_size 0
+draw_shades no
+alignment top_right
+gap_x 20
+gap_y 15
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale yes
+default_color ECEAE4
+color1 ffffff
+color2 ffffff
+
+TEXT
+##DATE & TIME##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Date & Time ${color slate grey}${hr 2}${font}
+${color1}Date               	${alignr}${color1}${time %A,}${color}${time %e %B %G}
+${color1}Time			${alignr}${color}${time %T}
+
+##SYSTEM##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}System ${color slate grey}${hr 2}${font}
+${color1}Distribution		${alignr}${color}${exec lsb_release -d -s}
+${color1}Hostname		${alignr}${color}${nodename}
+${color1}Current User Logged in	${alignr}${color}${pre_exec whoami}
+${color1}Linux Kernel		${alignr}${color}${kernel}-${machine}
+${color1}System Uptime		${alignr}${color}${uptime}
+${color1}CPU			${alignr}${color}${freq_g}GHz
+${color1}Load Average		${alignr}${color}${loadavg 1} ${loadavg 2} ${loadavg 3}
+${color1}Battery time/charge remaining			${alignr}${color}${battery_time BAT0}
+${color1}${battery_bar 5,300}
+
+##PROCESSORS##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Processors ${color slate grey}${hr 2}${font}
+${color}Core 1:  ${cpu cpu1}% $alignr ${freq_g (1)} GHz / ${exec sensors | grep "Core 0" | cut --bytes=14-21}
+${cpubar 5,300 cpu1}
+${color}Core 2:  ${cpu cpu2}% $alignr ${freq_g (2)} GHz / ${exec sensors | grep "Core 1" | cut --bytes=14-21}
+${cpubar 5,300 cpu1}
+#${color1}Core 1		${alignr}${color}${cpu cpu1}%  ${cpubar cpu1}
+#${color1}Core 2		${alignr}${color}${cpu cpu2}%  ${cpubar cpu2}
+#${color1}Core 3		${alignr}${color}${cpu cpu3}%  ${cpubar cpu3}
+#${color1}Core 4		${alignr}${color}${cpu cpu4}%  ${cpubar cpu4}
+
+##GPU##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Graphics Chip ${color slate grey}${hr 2}${font}
+${color}NVIDIA Temperature: $alignr ${execi 60 nvidia-settings -query GPUCoreTemp | perl -ne 'print $1 if /GPUCoreTemp.*?: (\d+)./;'} °C
+${color}Driver Version:${alignr}${color} ${execi 360 nvidia-settings -q NvidiaDriverVersion -t}${font}${color}
+
+##MEMORY##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Memory ${color slate grey}${hr 2}${font}
+${color1}Memory Used	${color}${alignr}${mem} / ${memmax}
+${color1}Memory Used %	${color}${alignr}${memperc}%   ${membar}
+${color}
+${color1}Swap Used	${color}${alignr}${swap} / ${swapmax}
+${color1}Swap Used %	${color}${alignr}${swapperc}%   ${swapbar}
+
+##FILESYSTEM##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Filesystem ${color slate grey}${hr 2}${font}
+${color1}Root:		${color}${alignc}${fs_used /} / ${fs_size /} ${color}${alignr}Space Free: ${fs_free_perc /} %
+${color}${fs_bar 5,300 /}
+${color1}Home:		${color}${alignc}${fs_used /home/jerry} / ${fs_size /home/jerry} ${color}${alignr}Space Free: ${fs_free_perc /home/jerry} %
+${color}${fs_bar 5,300 /home/jerry}
+${color1}Spare:		${color}${alignc}${fs_used /spare} / ${fs_size /spare} ${color}${alignr}Space Free: ${fs_free_perc /spare} %
+${color}${fs_bar 5,300 /spare}
+
+##NETWORKING##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Networking ${color slate grey}${hr 2}${font}
+${if_existing /proc/net/route wlan0}${color1}LAN IP Address (wlan0)	${color}${alignr}${addr wlan0}
+${color1}Gateway/Router	${alignr}${color}${gw_ip}
+#${if_existing /proc/net/route wlan1}${color1}LAN IP Address (wlan1)	${color}${alignr}${addr wlan1}
+${color}
+${color1}AP		${color}${alignr}${wireless_essid wlan0}
+${color1}Signal		${color}${alignr}${wireless_link_qual_perc wlan0}${wireless_link_bar 10,100 wlan0}
+${color1}Speed		${color}${alignr}${wireless_bitrate wlan0}
+${color1}Quality	${color}${alignr}${wireless_link_qual_perc wlan0}%
+${color1}Download Rate	${alignr}${color}${downspeed wlan0}${downspeedgraph wlan0 10,100 f60606 29f606 scale -l -t}
+${color1}Upload	Rate	${alignr}${color}${upspeed wlan0}${upspeedgraph wlan0 10,100 f60606 29f606 scale -l -t}
+${color1}Total Download	${alignr}${color}${totaldown wlan0}${color1}
+${color1}Total Upload	${alignr}${color}${totalup wlan0}
+#${else}${if_existing /proc/net/route eth0}${color1}LAN IP Address		${color}${alignr}${addr eth0}
+#${color1}Gateway/Router	${alignr}${color}${gw_ip}
+#${color}
+#${color1}Download Rate	${alignr}${color}${downspeed eth0}${downspeedgraph eth0 10,100}
+#${color1}Upload	Rate	${alignr}${color}${upspeed eth0}${upspeedgraph eth0 10,100}
+#${color}
+#${color1}Total Download	${alignr}${color}${totaldown eth0}${color1}
+#${color1}Total Upload	${alignr}${color}${totalup eth0}${endif}${endif}
+
+##TOP PROCESSES##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Top Processes ${color slate grey}${hr 2}${font}
+${color1}${top name 1} 	${alignr}${color}${top cpu 1} ${top mem 1}
+${color1}${top name 2} 	${alignr}${color}${top cpu 2} ${top mem 2}
+${color1}${top name 3} 	${alignr}${color}${top cpu 3} ${top mem 3}
+${color1}${top name 4} 	${alignr}${color}${top cpu 4} ${top mem 4}
+${color1}${top name 5} 	${alignr}${color}${top cpu 5} ${top mem 5}
+${color1}${top name 6} 	${alignr}${color}${top cpu 6} ${top mem 6}
+${color1}${top name 7} 	${alignr}${color}${top cpu 7} ${top mem 7}
+${color1}${top name 8} 	${alignr}${color}${top cpu 8} ${top mem 8}
+${color1}${top name 9} 	${alignr}${color}${top cpu 9} ${top mem 9}
+#${color1}${top name 10}  ${alignr}${color}${top cpu 10} ${top mem 10}
+
+##WORLD CLOCKS##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}World Clocks ${color slate grey}${hr 2}${font}
+${color1}Perth${alignr}${color1}${tztime Australia/Perth %T}
+${color1}Sydney, Melbourne, Queensland${alignr}${color2}${tztime Australia/NSW %T}
+${color1}England/Ireland${alignr}${tztime Europe/London %T}
+${color1}Sweden${alignr}${color1}${tztime Europe/Stockholm %T}
+${color1}India${alignr}${color1}${tztime Asia/Kolkata %T}
+${color1}Los Angeles (Pacific US)${alignr}${color1}${tztime US/Pacific %T}
+${color1}Alabama (Central US)${alignr}${color1}${tztime US/Central %T}
+${color1}New York (Eastern US)${alignr}${color1}${tztime US/Eastern %T}
+
+##LDC FORUM FEED##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}LDC Forum Feed ${color slate grey}${hr 2}${font}
+${color1}${rss https://www.linuxdistrocommunity.com/forums/syndication.php?limit=4 1 item_titles 4}
+
+##BITCOIN##
+#${font AvantGardeLTMedium:bold:size=10}${color Tan1}Bitcoin ${color slate grey}${hr 2}${font}
+#${color1}Difficulty${color}${alignr}${curl http://blockexplorer.com/q/getdifficulty}
+#${color1}Blockcount${color}${alignr}${curl http://blockexplorer.com/q/getblockcount}
