@@ -1,0 +1,7 @@
+mkdir ~/.conky
+copy .conkyrc_1, .conkyrc_2, conky_start & wan_ip to .conky/
+make sure conky_start & wan_ip are executable
+Add to start up: bash -c "sleep 10; /home/jerry/.conky/conky_start"
+
+.conkyrc_2_wlan0 is for the onboard wireless
+.conkyrc_2 is for the Netgear WNDA 4100 Dual Band adapter (ra0)
