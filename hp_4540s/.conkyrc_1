@@ -1,0 +1,101 @@
+use_xft yes
+maximum_width 300
+xftfont Terminus:size=8.5
+xftalpha 0.75
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_colour white
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_type normal
+own_window_class Conky
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+background no
+double_buffer yes
+minimum_size 300 1200
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_shade_color 000000
+default_outline_color 000000
+default_bar_size 150 5
+default_gauge_size 20 20
+imlib_cache_size 0
+draw_shades no
+alignment top_right
+gap_x 20
+gap_y 5
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale yes
+default_color ECEAE4
+color1 ffffff
+color2 ffffff
+
+TEXT
+##DATE & TIME##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Date & Time ${color slate grey}${hr 2}${font}
+${color1}Date               	${alignr}${color1}${time %A,}${color}${time %e %B %G}
+${color1}Time			${alignr}${color}${time %T}
+
+##SYSTEM##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}System ${color slate grey}${hr 2}${font}
+${color1}Distribution		${alignr}${color}${exec lsb_release -d -s}
+${color1}Hostname		${alignr}${color}${nodename}
+${color1}Current User Logged in	${alignr}${color}${pre_exec whoami}
+${color1}Linux Kernel		${alignr}${color}${kernel}-${machine}
+${color1}System Uptime		${alignr}${color}${uptime}
+${color1}CPU			${alignr}${color}${freq_g}GHz
+${color1}Load Average		${alignr}${color}${loadavg 1} ${loadavg 2} ${loadavg 3}
+${color1}Battery time/charge remaining			${alignr}${color}${battery_time BAT0}
+${color1}${battery_bar 5,300}
+
+##PROCESSORS##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Processors ${color slate grey}${hr 2}${font}
+${color}Core 1:  ${cpu cpu1}% $alignr ${freq_g (1)} GHz / ${exec sensors | grep "temp1" | cut --bytes=14-21}
+${cpubar 5,300 cpu1}
+${color}Core 2:  ${cpu cpu2}% $alignr ${freq_g (2)} GHz / ${exec sensors | grep "temp2" | cut --bytes=14-21}
+${cpubar 5,300 cpu2}
+${color}Core 3:  ${cpu cpu3}% $alignr ${freq_g (3)} GHz / ${exec sensors | grep "temp3" | cut --bytes=14-21}
+${cpubar 5,300 cpu3}
+${color}Core 4:  ${cpu cpu4}% $alignr ${freq_g (4)} GHz / ${exec sensors | grep "temp4" | cut --bytes=14-21}
+${cpubar 5,300 cpu4}
+#${color1}Core 1		${alignr}${color}${cpu cpu1}%  ${cpubar cpu1}
+#${color1}Core 2		${alignr}${color}${cpu cpu2}%  ${cpubar cpu2}
+#${color1}Core 3		${alignr}${color}${cpu cpu3}%  ${cpubar cpu3}
+#${color1}Core 4		${alignr}${color}${cpu cpu4}%  ${cpubar cpu4}
+
+##GPU##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Graphics Chip ${color slate grey}${hr 2}${font}
+#${color}NVIDIA Temperature: $alignr ${execi 60 nvidia-settings -query GPUCoreTemp | perl -ne 'print $1 if /GPUCoreTemp.*?: (\d+)./;'} °C
+${color}ATI Load/Temp/Fan Speed: $alignr ${color} ${execi 1 aticonfig --odgc --odgt --adapter=0 | egrep -i "load|temperature" | xargs echo | awk '{print $4 "   " $9 "°C "}'}${alignr 28}${execi 1 aticonfig --pplib-cmd "get fanspeed 0" | grep -i result | awk '{print $4}'}
+#${color}Driver Version:${alignr}${color} ${execi 360 nvidia-settings -q NvidiaDriverVersion -t}${font}${color}
+
+##MEMORY##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Memory ${color slate grey}${hr 2}${font}
+${color1}Memory Used	${color}${alignr}${mem} / ${memmax}
+${color1}Memory Used %	${color}${alignr}${memperc}%   ${membar}
+${color}
+${color1}Swap Used	${color}${alignr}${swap} / ${swapmax}
+${color1}Swap Used %	${color}${alignr}${swapperc}%   ${swapbar}
+
+##FILESYSTEM##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}Filesystem ${color slate grey}${hr 2}${font}
+${color1}Root:		${color}${alignc}${fs_used /} / ${fs_size /} ${color}${alignr}Space Free: ${fs_free_perc /} %
+${color}${fs_bar 5,300 /}
+${color1}Home:		${color}${alignc}${fs_used /home/jerry} / ${fs_size /home/jerry} ${color}${alignr}Space Free: ${fs_free_perc /home/jerry} %
+${color}${fs_bar 5,300 /home/jerry}
+${color1}Spare:		${color}${alignc}${fs_used /spare} / ${fs_size /spare} ${color}${alignr}Space Free: ${fs_free_perc /spare} %
+${color}${fs_bar 5,300 /spare}
+#${color1}Kali:		${color}${alignc}${fs_used /media/14dd5810-0de4-421a-b451-78be4d288ca1/} / ${fs_size /media/14dd5810-0de4-421a-b451-78be4d288ca1/} ${color}${alignr}Space Free: ${fs_free_perc /media/14dd5810-0de4-421a-b451-78be4d288ca1/} %
+#${color}${fs_bar 5,300 /media/14dd5810-0de4-421a-b451-78be4d288ca1/}
+#${color slate grey}${hr 2}${font}
+
+##LDC FORUM FEED##
+${font AvantGardeLTMedium:bold:size=10}${color Tan1}LDC Forum Feed ${color slate grey}${hr 2}${font}
+${color1}${rss https://www.linuxdistrocommunity.com/forums/syndication.php?limit=6 1 item_titles 6}
+${color slate grey}${hr 2}${font}
