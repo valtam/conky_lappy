@@ -91,11 +91,11 @@ ${color1}Home:		${color}${alignc}${fs_used /home/jerry} / ${fs_size /home/jerry}
 ${color}${fs_bar 5,300 /home/jerry}
 ${color1}Spare:		${color}${alignc}${fs_used /spare} / ${fs_size /spare} ${color}${alignr}Space Free: ${fs_free_perc /spare} %
 ${color}${fs_bar 5,300 /spare}
-#${color1}Kali:		${color}${alignc}${fs_used /media/14dd5810-0de4-421a-b451-78be4d288ca1/} / ${fs_size /media/14dd5810-0de4-421a-b451-78be4d288ca1/} ${color}${alignr}Space Free: ${fs_free_perc /media/14dd5810-0de4-421a-b451-78be4d288ca1/} %
-#${color}${fs_bar 5,300 /media/14dd5810-0de4-421a-b451-78be4d288ca1/}
-#${color slate grey}${hr 2}${font}
+${color1}Backups:		${color}${alignc}${fs_used /media/backup/} / ${fs_size /media/backup/} ${color}${alignr}Space Free: ${fs_free_perc /media/backup/} %
+${color}${fs_bar 5,300 /media/backup/}
+${color slate grey}${hr 2}${font}
 
 ##LDC FORUM FEED##
 ${font AvantGardeLTMedium:bold:size=10}${color Tan1}LDC Forum Feed ${color slate grey}${hr 2}${font}
-${color1}${rss https://www.linuxdistrocommunity.com/forums/syndication.php?limit=6 1 item_titles 6}
+${color1}${rss https://www.linuxdistrocommunity.com/forums/syndication.php?limit=4 1 item_titles 4}
 ${color slate grey}${hr 2}${font}
